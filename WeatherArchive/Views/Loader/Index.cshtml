@@ -1,0 +1,15 @@
+﻿@model WeatherArchive.ViewModels.LoaderViewModel
+
+@{
+    ViewData["Title"] = "Добавление файла";
+}
+<h3>Выберите файл для загрузки</h3>
+<form asp-action="AddFile" asp-controller="Loader" method="post" enctype="multipart/form-data">
+    <input class="form-control" multiple type="file" name="uploadedFiles" /><br>
+    <input class="btn btn-primary" type="submit" value="Загрузить" />
+</form>
+
+@if (Model.Error != null)
+{
+    <div class="text-danger">@Model.Error</div>
+}

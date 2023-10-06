@@ -1,0 +1,58 @@
+﻿@model WeatherArchive.ViewModels.PaginationViewModel
+
+@{
+    var pageButtonsOnSideNumber = 5;
+}
+
+<nav>
+    <ul class="pagination d-flex justify-content-center">
+        @if (Model.Pagination.CurrentPage > 1)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Index" asp-route-page="1" 
+                   asp-route-year="@Model.Filter.Year" asp-route-month="@Model.Filter.Month">
+                    В начало
+                </a>
+            </li>
+        }
+        
+        @{
+            var leftButtonsNumber = Math.Min(Model.Pagination.CurrentPage - 1, pageButtonsOnSideNumber);
+            var rightButtonsNumber = Math.Min(Model.Pagination.PagesNumber - Model.Pagination.CurrentPage, pageButtonsOnSideNumber);
+        }
+        @for (var i = 0; i < leftButtonsNumber; i++)
+        {
+            var pageNumber = Model.Pagination.CurrentPage - leftButtonsNumber + i;
+            <li class="page-item">
+                <a class="page-link" asp-action="Index"asp-route-page="@pageNumber" 
+                   asp-route-year="@Model.Filter.Year" asp-route-month="@Model.Filter.Month">
+                    @pageNumber
+                </a>
+            </li>
+        }
+        
+        <li class="page-item active"><a class="page-link">@Model.Pagination.CurrentPage</a></li>
+        
+        @for (var i = 0; i < rightButtonsNumber; i++)
+        {
+            var pageNumber = Model.Pagination.CurrentPage + i + 1;
+            <li class="page-item">
+                <a class="page-link" asp-action="Index"asp-route-page="@pageNumber" 
+                   asp-route-year="@Model.Filter.Year" asp-route-month="@Model.Filter.Month">
+                    @pageNumber
+                </a>
+            </li>
+        }
+
+        @if (Model.Pagination.CurrentPage < Model.Pagination.PagesNumber)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Index"asp-route-page="@Model.Pagination.PagesNumber" 
+                   asp-route-year="@Model.Filter.Year" asp-route-month="@Model.Filter.Month">
+                    В конец
+                </a>
+            </li>
+        }
+        
+    </ul>
+</nav>

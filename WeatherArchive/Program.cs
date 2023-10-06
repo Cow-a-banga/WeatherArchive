@@ -1,7 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+using WeatherArchive.DataBase;
+using WeatherArchive.Models;
+using WeatherArchive.Services.Excel;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddTransient<IExcelReader<WeatherPage>, WeatherExcelReader>();
+builder.Services.AddDbContext<WeatherContext>(opt =>
+    opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 

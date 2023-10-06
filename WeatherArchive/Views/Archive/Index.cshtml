@@ -1,0 +1,61 @@
+﻿@using WeatherArchive.ViewModels
+@model WeatherArchive.ViewModels.ArchiveViewModel
+
+<div>
+    <form method="get">
+        <div class="d-flex align-items-center">
+            <div class="me-5">
+                <label>Год:</label>
+                <select name="year" asp-items="@Model.Filter.Years"></select>
+            </div>
+                    
+            <div class="me-5">
+                <label>Месяц:</label>
+                <select name="month" asp-items="@Model.Filter.Months"></select>
+            </div>
+            
+            <input class="btn btn-primary" type="submit" value="Применить"/>
+        </div>
+
+        
+    </form>
+</div>
+
+<table class="table">
+    <thead>
+    <th>Дата</th>
+    <th>Время</th>
+    <th>Температура</th>
+    <th>Относительная влажность</th>
+    <th>Точка росы</th>
+    <th>Атмосферное давление</th>
+    <th>Направление ветра</th>
+    <th>Скорость ветра</th>
+    <th>Облачность</th>
+    <th>Нижняя граница облачности</th>
+    <th>Горизонтальная видимость</th>
+    <th>Погодные явления</th>
+    </thead>
+    <tbody>
+    @foreach (var row in Model.Items)
+    {
+        <tr>
+            <td>@row.Date</td>
+            <td>@row.Time</td>
+            <td>@row.Temperature</td>
+            <td>@row.RelativeHumidity</td>
+            <td>@row.DewPoint</td>
+            <td>@row.AtmospherePressure</td>
+            <td>@row.WindDirection</td>
+            <td>@row.WindSpeed</td>
+            <td>@row.Cloudy</td>
+            <td>@row.CloudBase</td>
+            <td>@row.HorizontalVisibility</td>
+            <td>@row.WeatherConditions</td>
+        </tr>   
+    }
+    </tbody>
+</table>
+
+@await Html.PartialAsync("Pagination", new PaginationViewModel {Pagination = Model.Pagination, Filter = @Model.Filter})
+
